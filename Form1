@@ -1,0 +1,55 @@
+Public Class Form1
+    Dim second As Integer = 0
+    Dim minute As Integer = 0
+    Dim hour As Integer = 0
+    Dim round As Integer = 0
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        second += 1
+        Label3.Text = second
+        Label2.Text = minute
+        Label1.Text = hour
+
+
+        If minute = 60 Then
+            hour += 1
+            minute = 0
+        ElseIf second = 60 Then
+            If ProgressBar1.Value < 100 Then
+                ProgressBar1.Value += 10
+            Else
+                ListBox1.Items.Add("Failed to complete valid period. ")
+                ListBox1.Items.Clear()
+                Timer1.Stop()
+                second = 0
+                minute = 0
+                hour = 0
+                Label1.Text = hour
+                Label2.Text = minute
+                Label3.Text = second
+            End If
+            minute += 1
+            second = 0
+        End If
+    End Sub
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Timer1.Start()
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Timer1.Stop()
+        round += 1
+        ListBox1.Items.Add(round & ". rd: " & hour & " : " & second & " : " & minute)
+    End Sub
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        ListBox1.Items.Clear()
+        second = 0
+        hour = 0
+        minute = 0
+        round = 0
+        Label3.Text = second
+        Label2.Text = minute
+        Label1.Text = hour
+    End Sub
+
+End Class
